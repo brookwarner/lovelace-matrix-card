@@ -1,0 +1,23 @@
+{
+  "name": "lovelace-matrix-card",
+  "version": "1.0.0",
+  "description": "Aligned, Mushroom-styled grid of entities by row and column for Home Assistant Lovelace.",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "keywords": ["home-assistant", "lovelace", "custom-card", "hacs", "mushroom", "grid", "table"],
+  "license": "MIT",
+  "dependencies": {
+    "lit": "^3.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rollup": "^4.24.0",
+    "tslib": "^2.8.0",
+    "typescript": "^5.6.0"
+  }
+}
