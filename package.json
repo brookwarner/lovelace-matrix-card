@@ -1,6 +1,6 @@
 {
   "name": "lovelace-matrix-card",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Aligned, Mushroom-styled grid of entities by row and column for Home Assistant Lovelace.",
   "type": "module",
   "scripts": {
