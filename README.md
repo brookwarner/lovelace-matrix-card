@@ -40,6 +40,10 @@ rows:
 
 Each row's `entities` map left-to-right onto `columns`.
 
+Tap any value cell to open Home Assistant's more-info dialog for that entity —
+the sheet overlay with its history graph (keyboard accessible: focus a cell and
+press Enter/Space).
+
 ## Development
 
 ```bash

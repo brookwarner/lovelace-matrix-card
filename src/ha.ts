@@ -35,3 +35,16 @@ export function resolveColor(c?: string): string {
   if (!c) return "var(--secondary-text-color, #888)";
   return PALETTE[c] || c;
 }
+
+// Open Home Assistant's more-info dialog (the sheet overlay with history)
+// for an entity. Fired from the card element; HA listens for this on the
+// composed path, so it must bubble and cross the shadow boundary.
+export function fireMoreInfo(node: HTMLElement, entityId: string): void {
+  node.dispatchEvent(
+    new CustomEvent("hass-more-info", {
+      detail: { entityId },
+      bubbles: true,
+      composed: true,
+    })
+  );
+}

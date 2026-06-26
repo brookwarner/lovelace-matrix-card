@@ -1,6 +1,6 @@
 import { LitElement, html, css, nothing, type TemplateResult } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { type HomeAssistant, resolveColor } from "./ha.js";
+import { type HomeAssistant, resolveColor, fireMoreInfo } from "./ha.js";
 
 interface MatrixRow {
   name?: string;
@@ -31,6 +31,17 @@ export class MatrixCard extends LitElement {
 
   public getCardSize(): number {
     return 1 + (this._config?.rows.length ?? 0);
+  }
+
+  private _moreInfo(entityId: string): void {
+    fireMoreInfo(this, entityId);
+  }
+
+  private _onKey(ev: KeyboardEvent, entityId: string): void {
+    if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault();
+      this._moreInfo(entityId);
+    }
   }
 
   private _cell(entityId: string): { txt: string; avail: boolean } {
@@ -66,9 +77,16 @@ export class MatrixCard extends LitElement {
               <div class="label ${ri > 0 ? "sep" : ""} ${rowAvail ? "" : "dim"}">
                 ${r.icon ? html`<ha-icon icon=${r.icon}></ha-icon>` : nothing}<span class="nm">${r.name || ""}</span>
               </div>
-              ${cells.map(
-                (x) => html`<div class="v ${ri > 0 ? "sep" : ""} ${x.avail ? "" : "dim"}">${x.txt}</div>`
-              )}
+              ${cells.map((x, ci) => {
+                const e = (r.entities || [])[ci];
+                return html`<div
+                  class="v ${ri > 0 ? "sep" : ""} ${x.avail ? "" : "dim"} ${e ? "clickable" : ""}"
+                  role=${e ? "button" : nothing}
+                  tabindex=${e ? "0" : nothing}
+                  @click=${e ? () => this._moreInfo(e) : nothing}
+                  @keydown=${e ? (ev: KeyboardEvent) => this._onKey(ev, e) : nothing}
+                >${x.txt}</div>`;
+              })}
             `;
           })}
         </div>
@@ -97,5 +115,8 @@ export class MatrixCard extends LitElement {
     }
     .sep { border-top: 0.5px solid var(--divider-color, rgba(255, 255, 255, 0.12)); }
     .dim { opacity: 0.4; }
+    .v.clickable { cursor: pointer; border-radius: 7px; }
+    .v.clickable:hover { background: var(--divider-color, rgba(127, 127, 127, 0.12)); }
+    .v.clickable:focus-visible { outline: 2px solid var(--accent, var(--primary-color, #2196f3)); outline-offset: -2px; }
   `;
 }
