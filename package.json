@@ -16,7 +16,7 @@
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.1",
-    "rollup": "^4.24.0",
+    "rollup": "^4.63.0",
     "tslib": "^2.8.0",
     "typescript": "^5.6.0"
   }
